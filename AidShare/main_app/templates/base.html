@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>{% block title %}{% endblock %} | AidShare</title>
+
+    <link rel="stylesheet" href="{% static "css/style.css" %}">
+    {% block script %}{% endblock %}
+</head>
+<body>
+
+<header class="header--form-page">
+    <nav class="container container--70">
+        {% if request.user.is_authenticated %}
+        <ul class="nav--actions">
+            <li class="logged-user">
+                Witaj Agata
+                <ul class="dropdown">
+                    <li><a href="#">Profile</a></li>
+                    <li><a href="#">Settings</a></li>
+                    <li><a href="#">Logout</a></li>
+                </ul>
+            </li>
+        </ul>
+        {% else %}
+        <ul class="nav--actions">
+          <li><a href="{% url 'login' %}" class="btn btn--small btn--without-border">Log in</a></li>
+          <li><a href="{% url 'register' %}" class="btn btn--small btn--highlighted">Register</a></li>
+        </ul>
+        {% endif %}
+
+        <ul>
+            <li><a href="{% url 'home' %}" class="btn btn--without-border active">Start</a></li>
+            <li><a href="{% url 'home' %}#steps" class="btn btn--without-border">What is it about?</a></li>
+            <li><a href="{% url 'home' %}#about-us" class="btn btn--without-border">About us</a></li>
+            <li><a href="{% url 'home' %}#help" class="btn btn--without-border">Foundations and organizations</a></li>
+            <li><a href="{% url 'add_donation' %}" class="btn btn--without-border">Gift</a></li>
+            <li><a href="{% url 'home' %}#contact" class="btn btn--without-border">Contact</a></li>
+        </ul>
+    </nav>
+
+    {% block slogan %}{% endblock %}
+
+</header>
+
+{% block content %}
+{% endblock %}
+
+<footer>
+    <div class="contact">
+        <h2>Contact us</h2>
+        <h3>Contact form</h3>
+        <form class="form--contact">
+            <div class="form-group form-group--50">
+                <input type="text" name="name" placeholder="Name"/>
+            </div>
+            <div class="form-group form-group--50">
+                <input type="text" name="surname" placeholder="Surname"/>
+            </div>
+
+            <div class="form-group">
+            <textarea
+                    name="message"
+                    placeholder="Message"
+                    rows="1"
+            ></textarea>
+            </div>
+
+            <button class="btn" type="submit">Send</button>
+        </form>
+    </div>
+    <div class="bottom-line">
+        <span class="bottom-line--copy">Copyright &copy; 2018</span>
+        <div class="bottom-line--icons">
+            <a href="#" class="btn btn--small"
+            ><img src="../static/images/icon-facebook.svg"
+            /></a>
+            <a href="#" class="btn btn--small"
+            ><img src="../static/images/icon-instagram.svg"
+            /></a>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
