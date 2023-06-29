@@ -17,7 +17,7 @@
         {% if request.user.is_authenticated %}
         <ul class="nav--actions">
             <li class="logged-user">
-                Witaj Agata
+                Welcome {{ request.user.username }}
                 <ul class="dropdown">
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Settings</a></li>

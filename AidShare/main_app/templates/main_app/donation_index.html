@@ -3,14 +3,14 @@
 
 {% block title %}Document{% endblock %}
 {% block script %}
-    <script src="../static/js/app.js"></script> {% endblock %}
+    <script src="../../static/js/app.js"></script> {% endblock %}
 
 {% block slogan %}
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
                 Begin Helping!<br/>
-                Donate unwanted items to those who need them.
+                Donate unwanted items to those who could use them.
             </h1>
         </div>
     </div>
@@ -20,15 +20,15 @@
     <section id="stats" class="stats">
         <div class="container container--85">
             <div class="stats--item">
-                <em>10</em>
-                <h3>Oddanych worków</h3>
+                <em>{{ bags }}</em>
+                <h3>Donated bags</h3>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eius est beatae, quod accusamus illum
                     tempora!</p>
             </div>
 
             <div class="stats--item">
-                <em>5</em>
-                <h3>Wspartych organizacji</h3>
+                <em>{{ institutions_count }}</em>
+                <h3>Supported institutions</h3>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam magnam, sint nihil cupiditate
                     quas quam.</p>
             </div>
@@ -70,9 +70,9 @@
             <h2>O nas</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vitae animi rem pariatur incidunt
                 libero optio esse quisquam illo omnis.</p>
-            <img src="../static/images/signature.svg" class="about-us--text-signature" alt="Signature"/>
+            <img src="../../static/images/signature.svg" class="about-us--text-signature" alt="Signature"/>
         </div>
-        <div class="about-us--image"><img src="../static/images/about-us.jpg" alt="People in circle"/></div>
+        <div class="about-us--image"><img src="../../static/images/about-us.jpg" alt="People in circle"/></div>
     </section>
 
     <section id="help" class="help">
@@ -90,40 +90,37 @@
                 się zajmują, komu pomagają i czego potrzebują.</p>
 
             <ul class="help--slides-items">
+                {% for institution in institutions %}
                 <li>
                     <div class="col">
-                        <div class="title">Fundacja "Dbam o Zdrowie"</div>
-                        <div class="subtitle">Cel i misja: Pomoc dzieciom z ubogich rodzin.</div>
+                        <div class="title">{{ institution.type }}, {{ institution.name }}</div>
+                        <div class="subtitle">{{ institution.description }}</div>
                     </div>
 
                     <div class="col">
                         <div class="text">ubrania, jedzenie, sprzęt AGD, meble, zabawki</div>
                     </div>
                 </li>
-
-                <li>
-                    <div class="col">
-                        <div class="title">Fundacja “Dla dzieci"</div>
-                        <div class="subtitle">Cel i misja: Pomoc osobom znajdującym się w trudnej sytuacji życiowej.
-                        </div>
-                    </div>
-
-                    <div class="col">
-                        <div class="text">ubrania, meble, zabawki</div>
-                    </div>
-                </li>
-
-                <li>
-                    <div class="col">
-                        <div class="title">Fundacja “Bez domu”</div>
-                        <div class="subtitle">Cel i misja: Pomoc dla osób nie posiadających miejsca zamieszkania</div>
-                    </div>
-
-                    <div class="col">
-                        <div class="text">ubrania, jedzenie, ciepłe koce</div>
-                    </div>
-                </li>
+                {% endfor %}
             </ul>
+
+            <div class="pagination">
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1">&laquo; first</a>
+                        <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+                    </span>
+
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}">next</a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+                    {% endif %}
+                </span>
+            </div>
             <!-- Pagination
             <ul class="help--slides-pagination">
               <li><a href="#" class="btn btn--small btn--without-border active" data-page="1">1</a></li>
