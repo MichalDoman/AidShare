@@ -1,11 +1,12 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, FormView
 from django.contrib.auth.models import User
-from django import forms
+from django.contrib.auth.views import LoginView
 
 from main_app.models import Donation, Institution
+from main_app.forms import RegisterForm
 
 
 class HomeView(ListView):
@@ -43,17 +44,8 @@ class AddDonationView(View):
         return render(request, "form.html")
 
 
-class LoginView(View):
-    def get(self, request):
-        return render(request, "login.html")
-
-
-class RegisterForm(forms.Form):
-    first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"placeholder": "Name"}))
-    last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"placeholder": "Surname"}))
-    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email"}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}))
-    password_2 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password_2"}))
+class ModifiedLoginView(LoginView):
+    pass
 
 
 class RegisterView(FormView):

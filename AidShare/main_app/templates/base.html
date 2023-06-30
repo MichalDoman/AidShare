@@ -12,7 +12,7 @@
 </head>
 <body>
 
-<header class="header--form-page">
+<header {% block header %}{% endblock %}>
     <nav class="container container--70">
         {% if request.user.is_authenticated %}
         <ul class="nav--actions">
@@ -21,7 +21,7 @@
                 <ul class="dropdown">
                     <li><a href="#">Profile</a></li>
                     <li><a href="#">Settings</a></li>
-                    <li><a href="#">Logout</a></li>
+                    <li><a href="{% url "logout" %}?next={{ request.path }}">Logout</a></li>
                 </ul>
             </li>
         </ul>

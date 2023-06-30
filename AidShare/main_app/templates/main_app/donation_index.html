@@ -5,6 +5,8 @@
 {% block script %}
     <script src="../../static/js/app.js"></script> {% endblock %}
 
+{% block header %}class="header--form-page"{% endblock %}
+
 {% block slogan %}
     <div class="slogan container container--90">
         <div class="slogan--item">
@@ -37,37 +39,37 @@
     </section>
 
     <section id="steps" class="steps">
-        <h2>Wystarczą 4 proste kroki</h2>
+        <h2>Just in 4 simple steps:</h2>
 
         <div class="steps--container">
             <div class="steps--item">
                 <span class="icon icon--hands"></span>
-                <h3>Wybierz rzeczy</h3>
-                <p>ubrania, zabawki, sprzęt i inne</p>
+                <h3>Choose items</h3>
+                <p>clothes, toys, electronics and other</p>
             </div>
             <div class="steps--item">
                 <span class="icon icon--arrow"></span>
-                <h3>Spakuj je</h3>
-                <p>skorzystaj z worków na śmieci</p>
+                <h3>Pack them</h3>
+                <p>you can yous thrash bags</p>
             </div>
             <div class="steps--item">
                 <span class="icon icon--glasses"></span>
-                <h3>Zdecyduj komu chcesz pomóc</h3>
-                <p>wybierz zaufane miejsce</p>
+                <h3>Decide who you want to support</h3>
+                <p>choose a trusted foundation</p>
             </div>
             <div class="steps--item">
                 <span class="icon icon--courier"></span>
-                <h3>Zamów kuriera</h3>
-                <p>kurier przyjedzie w dogodnym terminie</p>
+                <h3>Order a courier</h3>
+                <p>courier will arrive on a convenient date</p>
             </div>
         </div>
 
-        <a href="#" class="btn btn--large">Załóż konto</a>
+        <a href="{% url "register" %}" class="btn btn--large">Register</a>
     </section>
 
     <section id="about-us" class="about-us">
         <div class="about-us--text">
-            <h2>O nas</h2>
+            <h2>About us</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptas vitae animi rem pariatur incidunt
                 libero optio esse quisquam illo omnis.</p>
             <img src="{% static 'images/signature.svg' %}" class="about-us--text-signature" alt="Signature"/>
@@ -76,18 +78,18 @@
     </section>
 
     <section id="help" class="help">
-        <h2>Komu pomagamy?</h2>
+        <h2>Who receives our help?</h2>
 
         <ul class="help--buttons">
-            <li data-id="1"><a href="#" class="btn btn--without-border active">Fundacjom</a></li>
-            <li data-id="2"><a href="#" class="btn btn--without-border">Organizacjom pozarządowym</a></li>
-            <li data-id="3"><a href="#" class="btn btn--without-border">Lokalnym zbiórkom</a></li>
+            <li data-id="1"><a href="#" class="btn btn--without-border active">Foundations</a></li>
+            <li data-id="2"><a href="#" class="btn btn--without-border">Non-governmental organisations</a></li>
+            <li data-id="3"><a href="#" class="btn btn--without-border">Local collections</a></li>
         </ul>
 
         <!-- SLIDE 1 -->
         <div class="help--slides active" data-id="1">
-            <p>W naszej bazie znajdziesz listę zweryfikowanych Fundacji, z którymi współpracujemy. Możesz sprawdzić czym
-                się zajmują, komu pomagają i czego potrzebują.</p>
+            <p>In our database You will find a list of verified foundations, with which we cooperate.
+                You can see what they do, who they support and what they need.</p>
 
             <ul class="help--slides-items">
                 {% for institution in institutions %}
@@ -98,7 +100,7 @@
                     </div>
 
                     <div class="col">
-                        <div class="text">ubrania, jedzenie, sprzęt AGD, meble, zabawki</div>
+                        <div class="text">clothes, food, electronics, furniture, toys</div>
                     </div>
                 </li>
                 {% endfor %}
@@ -141,7 +143,7 @@
             <ul class="help--slides-items">
                 <li>
                     <div class="col">
-                        <div class="title">Organizacja 1</div>
+                        <div class="title">Organization 1</div>
                         <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
                     </div>
 
@@ -152,7 +154,7 @@
 
                 <li>
                     <div class="col">
-                        <div class="title">Organizacja 2</div>
+                        <div class="title">Organization 2</div>
                         <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
                     </div>
 
@@ -163,7 +165,7 @@
 
                 <li>
                     <div class="col">
-                        <div class="title">Organizacja 3</div>
+                        <div class="title">Organization 3</div>
                         <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
                     </div>
 
@@ -174,7 +176,7 @@
 
                 <li>
                     <div class="col">
-                        <div class="title">Organizacja 4</div>
+                        <div class="title">Organization 4</div>
                         <div class="subtitle">Lorem ipsum dolor sit amet consectetur.</div>
                     </div>
 
