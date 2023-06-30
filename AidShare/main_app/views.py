@@ -1,6 +1,9 @@
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import ListView, FormView
+from django.contrib.auth.models import User
+from django import forms
 
 from main_app.models import Donation, Institution
 
@@ -45,6 +48,42 @@ class LoginView(View):
         return render(request, "login.html")
 
 
-class RegisterView(View):
-    def get(self, request):
-        return render(request, "register.html")
+class RegisterForm(forms.Form):
+    first_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"placeholder": "Name"}))
+    last_name = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"placeholder": "Surname"}))
+    email = forms.EmailField(widget=forms.EmailInput(attrs={"placeholder": "Email"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}))
+    password_2 = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password_2"}))
+
+
+class RegisterView(FormView):
+    """A view that enables users to create accounts."""
+    template_name = "register.html"
+    form_class = RegisterForm
+    success_url = reverse_lazy("login")
+
+    def form_valid(self, form):
+        """Check if registration conditions are met. If so create an account and redirect to LoginView.
+        Otherwise, return invalid form error."""
+        first_name = form.cleaned_data['first_name']
+        last_name = form.cleaned_data['last_name']
+        email = form.cleaned_data['email']
+        password = form.cleaned_data['password']
+        password_2 = form.cleaned_data['password_2']
+
+        if User.objects.filter(email=email).exists():
+            form.add_error(None, 'This e-mail address is already taken!')
+            return super().form_invalid(form)
+
+        if password != password_2:
+            form.add_error(None, 'Passwords did not match!')
+            return super().form_invalid(form)
+
+        User.objects.create_user(
+            username=email,
+            first_name=first_name,
+            last_name=last_name,
+            email=email,
+            password=password,
+        )
+        return super().form_valid(form)
