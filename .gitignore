@@ -1,2 +1,7 @@
 venv/
 local_settings.py
+.idea
+.vscode
+node_modules
+package-lock.json
+project

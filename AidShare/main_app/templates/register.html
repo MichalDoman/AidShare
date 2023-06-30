@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Document{% endblock %}
+{% block script %}<script src="../static/js/app.js"></script> {% endblock %}
+
+{% block slogan %}
+{% endblock %}
+
+{% block content %}
+    <section class="login-page">
+        <h2>Create an account</h2>
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    {{ field }}
+                </div>
+            {% endfor %}
+
+            <div class="form-group form-group--buttons">
+                <a href="{% url "login" %}" class="btn btn--without-border">Log in</a>
+                <button class="btn" type="submit">Register</button>
+            </div>
+        </form>
+    </section>
+{% endblock %}
+
+
+
