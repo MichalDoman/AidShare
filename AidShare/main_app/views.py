@@ -45,7 +45,8 @@ class AddDonationView(View):
 
 
 class ModifiedLoginView(LoginView):
-    pass
+    def form_valid(self, form):
+        pass
 
 
 class RegisterView(FormView):

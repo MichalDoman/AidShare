@@ -5,7 +5,23 @@
 {% block script %}
     <script src="../../static/js/app.js"></script> {% endblock %}
 
-{% block slogan %}
+{% block header %}
+    <header>
+        <nav class="container container--70">
+            <ul class="nav--actions">
+                <li><a href="#">Login</a></li>
+                <li class="highlighted"><a href="{% url 'register' %}">Register</a></li>
+            </ul>
+
+            <ul>
+                <li><a href="{% url 'home' %}">Start</a></li>
+                <li><a href="{% url 'home' %}#steps">What is it about?</a></li>
+                <li><a href="{% url 'home' %}#about-us">About us</a></li>
+                <li><a href="{% url 'home' %}#help">Foundations and organizations</a></li>
+                <li><a href="{% url 'home' %}#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 {% endblock %}
 
 {% block content %}
