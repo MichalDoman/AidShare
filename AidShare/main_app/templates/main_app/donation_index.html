@@ -31,7 +31,7 @@
         <li><a href="{% url 'home' %}#steps" class="btn btn--without-border">What is it about?</a></li>
         <li><a href="{% url 'home' %}#about-us" class="btn btn--without-border">About us</a></li>
         <li><a href="{% url 'home' %}#help" class="btn btn--without-border">Foundations and organizations</a></li>
-        <li><a href="{% url 'add_donation' %}" class="btn btn--without-border">Gift</a></li>
+        <li><a href="{% if request.user.is_authenticated %}{% url 'add_donation' %}{% else %}{% url 'login' %}{% endif %}" class="btn btn--without-border">Gift</a></li>
         <li><a href="{% url 'home' %}#contact" class="btn btn--without-border">Contact</a></li>
     </ul>
     </nav>
@@ -92,8 +92,9 @@
                 <p>courier will arrive on a convenient date</p>
             </div>
         </div>
-
-        <a href="{% url "register" %}" class="btn btn--large">Register</a>
+        {% if not request.user.is_authenticated %}
+            <a href="{% url "register" %}" class="btn btn--large">Register</a>
+        {% endif %}
     </section>
 
     <section id="about-us" class="about-us">
@@ -124,7 +125,7 @@
                 {% for institution in institutions %}
                 <li>
                     <div class="col">
-                        <div class="title">{{ institution.type }}, {{ institution.name }}</div>
+                        <div class="title">{{ institution.get_type_display }}, {{ institution.name }}</div>
                         <div class="subtitle">{{ institution.description }}</div>
                     </div>
 

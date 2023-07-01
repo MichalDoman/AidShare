@@ -1,16 +1,15 @@
 from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
-from django.views import View
-from django.views.generic import ListView, FormView
+from django.views.generic import ListView, FormView, TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 
-from main_app.models import Donation, Institution
+from main_app.models import Donation, Institution, Category
 from main_app.forms import RegisterForm
 
 
 class HomeView(ListView):
-    """Landing Page of the app."""
+    """Landing page view of the app."""
     model = Donation
     template_name = "donation_index.html"
     template_name_suffix = "_index"
@@ -39,9 +38,26 @@ class HomeView(ListView):
         return context
 
 
-class AddDonationView(View):
-    def get(self, request):
-        return render(request, "form.html")
+class AddDonationView(TemplateView):
+    """A ListView for institutions used for adding-donation form."""
+    template_name = "form.html"
+
+    def get_context_data(self, **kwargs):
+        """Add all categories and institutions objects to the context."""
+        context = super().get_context_data(**kwargs)
+
+        categories = Category.objects.all()
+        institutions = Institution.objects.all()
+
+        context["categories"] = categories
+        context["institutions"] = institutions
+
+        return context
+
+    def post(self, request):
+        if "categories" in request.POST:
+            selected_categories = request.POST.getlist("categories")
+
 
 
 class ModifiedLoginView(LoginView):
