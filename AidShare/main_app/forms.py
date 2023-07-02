@@ -1,4 +1,20 @@
 from django import forms
+from main_app.models import Category, Donation
+
+
+class AddDonationForm(forms.ModelForm):
+    categories = forms.ModelMultipleChoiceField(queryset=Category.objects.all(), widget=forms.CheckboxSelectMultiple)
+
+    class Meta:
+        model = Donation
+        exclude = ['user']
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['quantity'].widget.attrs['name'] = 'bags'
+        self.fields['pick_up_date'].widget.attrs['name'] = 'date'
+        self.fields['pick_up_time'].widget.attrs['name'] = 'time'
+        self.fields['pick_up_comment'].widget.attrs['name'] = 'more_info'
 
 
 class RegisterForm(forms.Form):

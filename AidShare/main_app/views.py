@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
 
 from main_app.models import Donation, Institution, Category
-from main_app.forms import RegisterForm
+from main_app.forms import AddDonationForm, RegisterForm
 
 
 class HomeView(ListView):
@@ -38,9 +38,10 @@ class HomeView(ListView):
         return context
 
 
-class AddDonationView(TemplateView):
+class AddDonationView(FormView):
     """A ListView for institutions used for adding-donation form."""
     template_name = "form.html"
+    form_class = AddDonationForm
 
     def get_context_data(self, **kwargs):
         """Add all categories and institutions objects to the context."""
@@ -54,10 +55,8 @@ class AddDonationView(TemplateView):
 
         return context
 
-    def post(self, request):
-        if "categories" in request.POST:
-            selected_categories = request.POST.getlist("categories")
-
+    def form_valid(self, form):
+        form = self.form_class(self.request.POST)
 
 
 class ModifiedLoginView(LoginView):
