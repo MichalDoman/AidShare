@@ -1,4 +1,3 @@
-from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, TemplateView
 from django.contrib.auth.models import User
@@ -42,6 +41,7 @@ class AddDonationView(FormView):
     """A ListView for institutions used for adding-donation form."""
     template_name = "form.html"
     form_class = AddDonationForm
+    success_url = reverse_lazy("form_confirmation")
 
     def get_context_data(self, **kwargs):
         """Add all categories and institutions objects to the context."""
@@ -56,7 +56,36 @@ class AddDonationView(FormView):
         return context
 
     def form_valid(self, form):
-        form = self.form_class(self.request.POST)
+        quantity = form.cleaned_data['quantity']
+        categories = form.cleaned_data['categories']
+        institution = form.cleaned_data['institution']
+        address = form.cleaned_data['address']
+        phone_number = form.cleaned_data['phone_number']
+        city = form.cleaned_data['city']
+        zip_code = form.cleaned_data['zip_code']
+        pick_up_date = form.cleaned_data['pick_up_date']
+        pick_up_time = form.cleaned_data['pick_up_time']
+        pick_up_comment = form.cleaned_data['pick_up_comment']
+
+        donation = Donation.objects.create(quantity=quantity,
+                                           institution=institution,
+                                           address=address,
+                                           phone_number=phone_number,
+                                           city=city,
+                                           zip_code=zip_code,
+                                           pick_up_date=pick_up_date,
+                                           pick_up_time=pick_up_time,
+                                           pick_up_comment=pick_up_comment,
+                                           user=self.request.user)
+
+        donation.categories.set(categories)
+        donation.save()
+
+        return super().form_valid(form)
+
+
+class FormConfirmationView(TemplateView):
+    template_name = "form-confirmation.html"
 
 
 class ModifiedLoginView(LoginView):

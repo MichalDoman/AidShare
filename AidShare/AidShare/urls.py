@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from main_app.views import HomeView, AddDonationView, ModifiedLoginView, RegisterView
+from main_app.views import HomeView, AddDonationView, FormConfirmationView, ModifiedLoginView, RegisterView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -9,5 +9,6 @@ urlpatterns = [
     path("accounts/login/", ModifiedLoginView.as_view(), name="login"),
     path('', HomeView.as_view(), name="home"),
     path('add-donation/', AddDonationView.as_view(), name="add_donation"),
+    path('form-confirmation/', FormConfirmationView.as_view(), name="form_confirmation"),
     path('register', RegisterView.as_view(), name="register"),
 ]
