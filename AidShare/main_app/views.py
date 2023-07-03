@@ -1,7 +1,9 @@
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, TemplateView
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView
+from django.contrib.auth import authenticate
 
 from main_app.models import Donation, Institution, Category
 from main_app.forms import AddDonationForm, RegisterForm
@@ -41,7 +43,6 @@ class AddDonationView(FormView):
     """A ListView for institutions used for adding-donation form."""
     template_name = "form.html"
     form_class = AddDonationForm
-    success_url = reverse_lazy("form_confirmation")
 
     def get_context_data(self, **kwargs):
         """Add all categories and institutions objects to the context."""
@@ -89,8 +90,17 @@ class FormConfirmationView(TemplateView):
 
 
 class ModifiedLoginView(LoginView):
+
     def form_valid(self, form):
-        pass
+        username = form.cleaned_data.get('username')
+        password = form.cleaned_data.get('password')
+        print(username)
+        user = authenticate(username=username, password=password)
+        if user is not None:
+            return super().form_valid(form)
+        else:
+            print("no such user")
+            return redirect(reverse_lazy("redirect"))
 
 
 class RegisterView(FormView):

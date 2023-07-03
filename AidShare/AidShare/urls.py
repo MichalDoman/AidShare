@@ -1,5 +1,7 @@
 from django.contrib import admin
 from django.urls import path, include
+from django.conf import settings
+from django.conf.urls.static import static
 
 from main_app.views import HomeView, AddDonationView, FormConfirmationView, ModifiedLoginView, RegisterView
 
@@ -11,4 +13,4 @@ urlpatterns = [
     path('add-donation/', AddDonationView.as_view(), name="add_donation"),
     path('form-confirmation/', FormConfirmationView.as_view(), name="form_confirmation"),
     path('register', RegisterView.as_view(), name="register"),
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
