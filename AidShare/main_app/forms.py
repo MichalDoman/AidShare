@@ -3,7 +3,6 @@ from main_app.models import Donation
 
 
 class AddDonationForm(forms.ModelForm):
-
     class Meta:
         model = Donation
         exclude = ['user']
@@ -15,6 +14,11 @@ class AddDonationForm(forms.ModelForm):
         self.fields['pick_up_date'].widget.attrs['name'] = 'date'
         self.fields['pick_up_time'].widget.attrs['name'] = 'time'
         self.fields['pick_up_comment'].widget.attrs['name'] = 'more_info'
+
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"placeholder": "Email"}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={"placeholder": "Password"}))
 
 
 class RegisterForm(forms.Form):

@@ -2,11 +2,11 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, TemplateView
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView
-from django.contrib.auth import authenticate
+# from django.contrib.auth.views import LoginView
+from django.contrib.auth import login, authenticate
 
 from main_app.models import Donation, Institution, Category
-from main_app.forms import AddDonationForm, RegisterForm
+from main_app.forms import AddDonationForm, RegisterForm, LoginForm
 
 
 class HomeView(ListView):
@@ -89,18 +89,20 @@ class FormConfirmationView(TemplateView):
     template_name = "form-confirmation.html"
 
 
-class ModifiedLoginView(LoginView):
+class LoginView(FormView):
+    form_class = LoginForm
+    template_name = "login.html"
+    success_url = reverse_lazy("home")
 
     def form_valid(self, form):
-        username = form.cleaned_data.get('username')
-        password = form.cleaned_data.get('password')
-        print(username)
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            return super().form_valid(form)
-        else:
-            print("no such user")
-            return redirect(reverse_lazy("redirect"))
+        username = form.cleaned_data["username"]
+        password = form.cleaned_data["password"]
+        if not User.objects.filter(username=username).exists():
+            return redirect(reverse_lazy("register"))
+
+        if authenticate(username=username, password=password) is not None:
+            login(self.request, User.objects.get(username=username))
+        return super().form_valid(form)
 
 
 class RegisterView(FormView):
