@@ -2,7 +2,6 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, TemplateView
 from django.contrib.auth.models import User
-# from django.contrib.auth.views import LoginView
 from django.contrib.auth import login, authenticate
 
 from main_app.models import Donation, Institution, Category
@@ -12,8 +11,7 @@ from main_app.forms import AddDonationForm, RegisterForm, LoginForm
 class HomeView(ListView):
     """Landing page view of the app."""
     model = Donation
-    template_name = "donation_index.html"
-    template_name_suffix = "_index"
+    template_name = "index.html"
     context_object_name = "donations"
     paginate_by = 5
 
