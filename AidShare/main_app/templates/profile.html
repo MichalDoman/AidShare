@@ -7,7 +7,7 @@
 {% block header %}
 <header class="header--main-page">
     <nav class="container container--70">
-        {% if request.user.is_authenticated %}
+    {% if request.user.is_authenticated %}
         <ul class="nav--actions">
             <li class="logged-user">
                 Welcome {{ request.user.first_name }}
@@ -37,11 +37,9 @@
     </ul>
     </nav>
 
-    <div class="slogan container container--90">
-        <h2>
-            Thank You for your submission. You will receive an email with detailed information
-            about the receipt.
-        </h2>
-    </div>
 </header>
+{% endblock %}
+
+{% block content %}
+
 {% endblock %}
