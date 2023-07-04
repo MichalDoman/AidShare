@@ -2,42 +2,14 @@
 {% load static %}
 
 {% block title %}Form{% endblock %}
-{% block script %}<script src="../static/js/app.js" defer></script> {% endblock %}
 
-{% block header %}
-    <header class="header--form-page">
-    <nav class="container container--70">
-        {% if request.user.is_authenticated %}
-        <ul class="nav--actions">
-            <li class="logged-user">
-                Welcome {{ request.user.first_name }}
-                <ul class="dropdown">
-                    <li><a href="#">Profile</a></li>
-                    <li><a href="#">Settings</a></li>
-                    {% if request.user.is_superuser %}
-                        <li><a href="admin/">Administration Panel</a></li>
-                    {% endif %}
-                    <li><a href="{% url "logout" %}?next={{ request.path }}">Logout</a></li>
-                </ul>
-            </li>
-        </ul>
-    {% else %}
-        <ul class="nav--actions">
-          <li><a href="{% url 'login' %}" class="btn btn--small btn--without-border">Log in</a></li>
-          <li><a href="{% url 'register' %}" class="btn btn--small btn--highlighted">Register</a></li>
-        </ul>
-    {% endif %}
+{% block header_class %}header--form-page{% endblock %}
 
-    <ul>
-        <li><a href="{% url 'home' %}" class="btn btn--without-border active">Start</a></li>
-        <li><a href="{% url 'home' %}#steps" class="btn btn--without-border">What is it about?</a></li>
-        <li><a href="{% url 'home' %}#about-us" class="btn btn--without-border">About us</a></li>
-        <li><a href="{% url 'home' %}#help" class="btn btn--without-border">Foundations and organizations</a></li>
-        <li><a href="#" class="btn btn--without-border">Gift</a></li>
-        <li><a href="{% url 'home' %}#contact" class="btn btn--without-border">Contact</a></li>
-    </ul>
-    </nav>
+{% block gift_link %}
+    <li><a href="#" class="btn btn--without-border">Gift</a></li>
+{% endblock %}
 
+{% block slogan %}
     <div class="slogan container container--90">
         <div class="slogan--item">
             <h1>
@@ -64,7 +36,6 @@
             </div>
         </div>
     </div>
-</header>
 {% endblock %}
 
 {% block content %}
