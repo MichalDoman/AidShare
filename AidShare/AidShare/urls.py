@@ -13,5 +13,5 @@ urlpatterns = [
     path('add-donation/', AddDonationView.as_view(), name="add_donation"),
     path('form-confirmation/', FormConfirmationView.as_view(), name="form_confirmation"),
     path('register/', RegisterView.as_view(), name="register"),
-    path('profile/', ProfileView.as_view(), name="profile")
+    path('profile/<int:pk>/', ProfileView.as_view(), name="profile")
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

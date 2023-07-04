@@ -19,7 +19,7 @@
             <li class="logged-user">
                 Welcome {{ request.user.first_name }}
                 <ul class="dropdown">
-                    <li><a href="{% url 'profile' %}">Profile</a></li>
+                    <li><a href="{% url 'profile' request.user.pk %}">Profile</a></li>
                     <li><a href="#">Settings</a></li>
                     {% if request.user.is_superuser %}
                         <li><a href="admin/">Administration Panel</a></li>
