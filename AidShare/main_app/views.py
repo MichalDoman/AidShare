@@ -1,3 +1,4 @@
+from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView, TemplateView, DetailView
@@ -53,6 +54,13 @@ class AddDonationView(FormView):
         context["institutions"] = institutions
 
         return context
+
+    def get(self, request, *args, **kwargs):
+        if request.GET.get('selected_categories'):
+            selected_categories = request.GET.get('selected_categories')
+            return JsonResponse({"selected_categories": selected_categories})
+        else:
+            return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         quantity = form.cleaned_data['quantity']

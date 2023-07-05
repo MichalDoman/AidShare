@@ -70,7 +70,7 @@
                     {% for category in form.categories.field.choices %}
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input type="checkbox" name="categories" value="{{ category.1 }}"/>
+                            <input id="category" type="checkbox" name="categories" value="{{ category.1 }}"/>
                             <span class="checkbox"></span>
                             <span class="description">{{ category.1 }}</span>
                         </label>

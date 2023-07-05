@@ -8,7 +8,9 @@
     <title>{% block title %}{% endblock %} | AidShare</title>
 
     <link rel="stylesheet" href="{% static "css/style.css" %}">
+
     <script src="../static/js/app.js" defer></script>
+    <script src="{% static 'js/jquery.js' %}"></script>
 </head>
 <body>
 
@@ -56,7 +58,7 @@
 {% endblock %}
 
 <footer>
-    <div class="contact">
+    <div class="contact" id="contact">
         <h2>Contact us</h2>
         <h3>Contact form</h3>
         <form class="form--contact">

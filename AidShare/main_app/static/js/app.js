@@ -196,8 +196,10 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$next.forEach(btn => {
         btn.addEventListener("click", e => {
           e.preventDefault();
+          let previousStep = this.currentStep
           this.currentStep++;
           this.updateForm();
+          this.filterForm(previousStep);
         });
       });
 
@@ -235,6 +237,21 @@ document.addEventListener("DOMContentLoaded", function() {
       this.$step.parentElement.hidden = this.currentStep >= 6;
 
       // TODO: get data from inputs and show them in summary
+    }
+
+    filterForm(previousStep) {
+      console.log('check_1')
+      if (previousStep === 1){
+        let categories = document.querySelectorAll("#category");
+        $.ajax({
+          url:'',
+          type: 'get',
+          data: {selected_categories: categories},
+          success: function (response){
+            console.log(response['selected_categories']);
+          }
+        })
+      }
     }
 
     /**
