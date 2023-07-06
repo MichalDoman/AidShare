@@ -148,3 +148,11 @@ class ProfileView(DetailView):
     model = User
     context_object_name = 'user'
     template_name = 'profile.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user_id = self.kwargs['pk']
+        donations = Donation.objects.filter(user=user_id).select_related("institution")
+
+        context['donations'] = donations
+        return context

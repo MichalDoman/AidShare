@@ -8,14 +8,29 @@
 {% endblock %}
 
 {% block content %}
+    <span>Your information:</span>
     <ul>
-        <li>{{ user.username }}</li>
-        <li>{{ user.first_name }}</li>
-        <li>{{ user.last_name }}</li>
-        <li>{{ user.email }}</li>
-        <li>{{ user.is_staff }}</li>
-        <li>{{ user.is_active }}</li>
-        <li>{{ user.last_login }}</li>
-        <li>{{ user.date_joined }}</li>
+        <li>Username: {{ user.username }}</li>
+        <li>Name: {{ user.first_name }}</li>
+        <li>Surname: {{ user.last_name }}</li>
+        <li>Email: {{ user.email }}</li>
+        <li>is staff: {{ user.is_staff }}</li>
+        <li>is active: {{ user.is_active }}</li>
+        <li>last login: {{ user.last_login }}</li>
+        <li>Date joined: {{ user.date_joined }}</li>
     </ul>
+
+    <span>Your Donations:</span>
+    {% for donation in donations %}
+        <div>
+            <ul>
+                <li>Number of bags: {{ donation.quantity }}</li>
+                <li>Institution: {{ institution.name }}, {{ institution.get_type_display }}</li>
+                <li>Categories:{% for category in donation.categories %}{{ category }} {% endfor %}</li>
+                <li>Pick up date: {{ donation.pick_up_date }}, {{ donation.pick_up_time }}</li>
+            </ul>
+        </div>
+    {% empty %}
+        You have not yet donated anything.
+    {% endfor %}
 {% endblock %}
