@@ -3,15 +3,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from main_app.views import HomeView, AddDonationView, FormConfirmationView, LoginView, RegisterView, ProfileView
+from main_app.views import HomeView, AddDonationView, FormConfirmationView, LoginView, RegisterView, ProfileView, \
+    ProfileUpdateView
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path("accounts/", include("django.contrib.auth.urls")),
-    path('login/', LoginView.as_view(), name="login"),
-    path('', HomeView.as_view(), name="home"),
-    path('add-donation/', AddDonationView.as_view(), name="add_donation"),
-    path('form-confirmation/', FormConfirmationView.as_view(), name="form_confirmation"),
-    path('register/', RegisterView.as_view(), name="register"),
-    path('profile/<int:pk>/', ProfileView.as_view(), name="profile")
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+                  path('', include("main_app.urls")),
+                  path('admin/', admin.site.urls),
+                  path("accounts/", include(("django.contrib.auth.urls", 'auth'), namespace='auth')),
+              ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

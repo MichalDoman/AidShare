@@ -9,8 +9,9 @@
 
     <link rel="stylesheet" href="{% static "css/style.css" %}">
 
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
     <script src="../static/js/app.js" defer></script>
-    <script src="{% static 'js/jquery.js' %}"></script>
+
 </head>
 <body>
 
@@ -22,11 +23,11 @@
                 Welcome {{ request.user.first_name }}
                 <ul class="dropdown">
                     <li><a href="{% url 'profile' request.user.pk %}">Profile</a></li>
-                    <li><a href="#">Settings</a></li>
+                    <li><a href="{% url 'profile_update' request.user.pk %}">Settings</a></li>
                     {% if request.user.is_superuser %}
-                        <li><a href="admin/">Administration Panel</a></li>
+                        <li><a href="/admin">Administration Panel</a></li>
                     {% endif %}
-                    <li><a href="{% url "logout" %}?next={{ request.path }}">Logout</a></li>
+                    <li><a href="{% url "auth:logout" %}?next={{ request.path }}">Logout</a></li>
                 </ul>
             </li>
         </ul>

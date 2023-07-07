@@ -1,7 +1,8 @@
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
-from django.urls import reverse_lazy
-from django.views.generic import ListView, FormView, TemplateView, DetailView
+from django.urls import reverse_lazy, reverse
+from django.views import View
+from django.views.generic import ListView, FormView, TemplateView, DetailView, UpdateView
 from django.contrib.auth.models import User
 from django.contrib.auth import login, authenticate
 
@@ -30,11 +31,11 @@ class HomeView(ListView):
 
         context['bags'] = sum_of_bags
 
-        institutions_count = []
+        donation_institutions = set()
         for donation in donations:
-            institutions.append(donation.institution)
+            donation_institutions.add(donation.institution)
+        context['institutions_count'] = len(donation_institutions)
 
-        context['institutions_count'] = len(set(institutions_count))
         return context
 
 
@@ -42,6 +43,9 @@ class AddDonationView(FormView):
     """A ListView for institutions used for adding-donation form."""
     template_name = "form.html"
     form_class = AddDonationForm
+
+    def get_success_url(self):
+        return reverse('form_confirmation')
 
     def get_context_data(self, **kwargs):
         """Add all categories and institutions objects to the context."""
@@ -54,13 +58,6 @@ class AddDonationView(FormView):
         context["institutions"] = institutions
 
         return context
-
-    def get(self, request, *args, **kwargs):
-        if request.GET.get('selected_categories'):
-            selected_categories = request.GET.get('selected_categories')
-            return JsonResponse({"selected_categories": selected_categories})
-        else:
-            return super().get(request, *args, **kwargs)
 
     def form_valid(self, form):
         quantity = form.cleaned_data['quantity']
@@ -89,6 +86,18 @@ class AddDonationView(FormView):
         donation.save()
 
         return super().form_valid(form)
+
+
+class GetInstitutions(View):
+    def get(self, request, *args, **kwargs):
+        categories = request.GET.getlist('categories[]', [])
+        try:
+            ids = [int(c) for c in categories]
+        except ValueError:
+            return HttpResponseBadRequest()
+        else:
+            institutions = Institution.objects.filter(categories__in=ids).distinct()
+            return JsonResponse({"institutions": [i.id for i in institutions]})
 
 
 class FormConfirmationView(TemplateView):
@@ -156,3 +165,9 @@ class ProfileView(DetailView):
 
         context['donations'] = donations
         return context
+
+
+class ProfileUpdateView(UpdateView):
+    model = User
+    template_name = 'profile_update.html'
+    fields = ['username', 'first_name', 'last_name', 'email']

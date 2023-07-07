@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Update Profile{% endblock %}
+
+{% block gift_link %}
+    <li><a href="{% url 'add_donation' %}" class="btn btn--without-border">Gift</a></li>
+{% endblock %}
+
+{% block content %}
+    <form method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Update</button>
+    </form>
+{% endblock %}

@@ -7,14 +7,6 @@ class AddDonationForm(forms.ModelForm):
         model = Donation
         exclude = ['user']
 
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.fields['quantity'].widget.attrs['name'] = 'bags'
-        self.fields['zip_code'].widget.attrs['name'] = 'postcode'
-        self.fields['pick_up_date'].widget.attrs['name'] = 'date'
-        self.fields['pick_up_time'].widget.attrs['name'] = 'time'
-        self.fields['pick_up_comment'].widget.attrs['name'] = 'more_info'
-
 
 class LoginForm(forms.Form):
     username = forms.CharField(max_length=100, widget=forms.TextInput(attrs={"placeholder": "Email"}))
