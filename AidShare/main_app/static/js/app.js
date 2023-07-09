@@ -223,9 +223,6 @@ document.addEventListener("DOMContentLoaded", function () {
          */
         updateForm() {
             this.$step.innerText = this.currentStep;
-
-            console.log('STEP', this.currentStep);
-
             let is_valid = true;
             if (!is_valid) {
                 this.currentStep++;
@@ -243,23 +240,40 @@ document.addEventListener("DOMContentLoaded", function () {
             this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 6;
             this.$step.parentElement.hidden = this.currentStep >= 6;
 
+            let categories = $('[name=categories]:checked').map(function(){return $(this).val()}).toArray()
             if (this.currentStep === 3) {
-                let categories = $('[name=categories]:checked').map(function(){return $(this).val()}).toArray()
-                console.log("CATEGORIES", categories)
                 $('[name=institution]').closest('div').hide()
                 $.get({
                     url: '/get-institutions',
                     data: {'categories': categories},
                     success: function(response){
                         let ids = response['institutions'];
-                        console.log('INSTITUTIONS', ids);
-                        $.each(ids, function(i, id){
-                            console.log('SHOW', id);
-                            $('[name=institution][value="+ id +"]').closest('div').show()
+                        $.each(ids, function(_, id){
+                            $('[name=institution][value=' + id + ']').closest('div').show()
                         })
                     }
 
                 })
+            }
+
+            if (this.currentStep === 5) {
+                let quantity = $('input[name=quantity]').val();
+                let institution = $('input[name=institution]').val();
+                let address = $('input[name=address]').val();
+                let city = $('input[name=city]').val();
+                let zip_code = $('input[name=zip_code]').val();
+                let phone_number = $('input[name=phone_number]').val();
+                let pick_up_date = $('input[name=pick_up_date]').val();
+                let pick_up_time = $('input[name=pick_up_time]').val();
+                let pick_up_comment = $('input[name=pick_up_comment]').val();
+
+                let categories_string = ''
+                for (let i=0; i < categories.length - 1; i++) {
+                    categories_string += categories[i].toString()
+                    console.log(categories_string)
+                }
+                categories_string += categories[categories.length]
+                $('#quantity').text(quantity.toString() + ' bags of ' + categories_string);
             }
         }
 
