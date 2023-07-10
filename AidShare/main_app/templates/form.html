@@ -71,7 +71,7 @@
                     {% for category in form.categories.field.choices %}
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input type="checkbox" name="categories" value="{{ category.0 }}"/>
+                            <input type="checkbox" name="categories" value="{{ category.0 }}" data-display="{{ category.1 }}"/>
                             <span class="checkbox"></span>
                             <span class="description">{{ category.1 }}</span>
                         </label>
@@ -107,7 +107,7 @@
                     {% for institution in institutions %}
                     <div class="form-group form-group--checkbox">
                         <label>
-                            <input type="radio" name="institution" value="{{ institution.id }}"/>
+                            <input type="radio" name="institution" value="{{ institution.id }}" data-display='“{{ institution.name }}" {{ institution.get_type_display }}'/>
                             <span class="checkbox radio"></span>
                             <span class="description">
                                 <div class="title">“{{ institution.name }}" {{ institution.get_type_display }}</div>
@@ -187,12 +187,12 @@
                             <ul>
                                 <li>
                                     <span class="icon icon-bag"></span>
-                                    <span class="summary--text" id="quantity">Galweef</span>
+                                    <span class="summary--text" id="quantity"></span>
                                 </li>
 
                                 <li>
                                     <span class="icon icon-hand"></span>
-                                    <span class="summary--text">Dla fundacji "Mam marzenie" w Warszawie</span>
+                                    <span class="summary--text" id="institution"></span>
                                 </li>
                             </ul>
                         </div>
@@ -201,19 +201,19 @@
                             <div class="form-section--column">
                                 <h4>Address</h4>
                                 <ul>
-                                    <li>Prosta 51</li>
-                                    <li>Warszawa</li>
-                                    <li>99-098</li>
-                                    <li>123 456 789</li>
+                                    <li id="address"></li>
+                                    <li id="city"></li>
+                                    <li id="zip_code"></li>
+                                    <li id="phone_number"></li>
                                 </ul>
                             </div>
 
                             <div class="form-section--column">
                                 <h4>Date of collection:</h4>
                                 <ul>
-                                    <li>13/12/2018</li>
-                                    <li>15:40</li>
-                                    <li>Brak uwag</li>
+                                    <li id="pick_up_date"></li>
+                                    <li id="pick_up_time"></li>
+                                    <li id="pick_up_comment"></li>
                                 </ul>
                             </div>
                         </div>

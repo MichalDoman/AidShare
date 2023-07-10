@@ -240,8 +240,9 @@ document.addEventListener("DOMContentLoaded", function () {
             this.$stepInstructions[0].parentElement.parentElement.hidden = this.currentStep >= 6;
             this.$step.parentElement.hidden = this.currentStep >= 6;
 
-            let categories = $('[name=categories]:checked').map(function(){return $(this).val()}).toArray()
+
             if (this.currentStep === 3) {
+                let categories = $('[name=categories]:checked').map(function(){return $(this).val()}).toArray()
                 $('[name=institution]').closest('div').hide()
                 $.get({
                     url: '/get-institutions',
@@ -257,23 +258,31 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             if (this.currentStep === 5) {
+                let categories = $('input[name=categories]:checked').map(function(){return $(this).attr('data-display')}).toArray()
                 let quantity = $('input[name=quantity]').val();
-                let institution = $('input[name=institution]').val();
+                let institution = $('input[name=institution]:checked').attr('data-display');
                 let address = $('input[name=address]').val();
                 let city = $('input[name=city]').val();
                 let zip_code = $('input[name=zip_code]').val();
                 let phone_number = $('input[name=phone_number]').val();
                 let pick_up_date = $('input[name=pick_up_date]').val();
                 let pick_up_time = $('input[name=pick_up_time]').val();
-                let pick_up_comment = $('input[name=pick_up_comment]').val();
+                let pick_up_comment = $('textarea[name=pick_up_comment]').val();
 
                 let categories_string = ''
                 for (let i=0; i < categories.length - 1; i++) {
-                    categories_string += categories[i].toString()
-                    console.log(categories_string)
+                    categories_string += categories[i] + ', '
                 }
-                categories_string += categories[categories.length]
+                categories_string += categories[categories.length - 1]
                 $('#quantity').text(quantity.toString() + ' bags of ' + categories_string);
+                $('#institution').text('For ' + institution);
+                $('#address').text(address);
+                $('#city').text(city);
+                $('#zip_code').text(zip_code);
+                $('#phone_number').text(phone_number);
+                $('#pick_up_date').text(pick_up_date);
+                $('#pick_up_time').text(pick_up_time);
+                $('#pick_up_comment').text(pick_up_comment);
             }
         }
 
