@@ -1,6 +1,6 @@
 from django.http import JsonResponse, HttpResponseBadRequest
 from django.shortcuts import redirect
-from django.urls import reverse_lazy, reverse
+from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import ListView, FormView, TemplateView, DetailView, UpdateView
 from django.contrib.auth.models import User
@@ -43,9 +43,10 @@ class AddDonationView(FormView):
     """A ListView for institutions used for adding-donation form."""
     template_name = "form.html"
     form_class = AddDonationForm
+    # success_url = reverse_lazy('form_confirmation')
 
     def get_success_url(self):
-        return reverse('form_confirmation')
+        return reverse_lazy('form_confirmation')
 
     def get_context_data(self, **kwargs):
         """Add all categories and institutions objects to the context."""
@@ -89,7 +90,7 @@ class AddDonationView(FormView):
 
 
 class GetInstitutions(View):
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         categories = request.GET.getlist('categories[]', [])
         try:
             ids = [int(c) for c in categories]

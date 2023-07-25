@@ -3,8 +3,6 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from main_app.views import HomeView, AddDonationView, FormConfirmationView, LoginView, RegisterView, ProfileView, \
-    ProfileUpdateView
 
 urlpatterns = [
                   path('', include("main_app.urls")),

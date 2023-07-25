@@ -288,8 +288,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         /**
          * Submit form
-         *
-         * TODO: validation, send data to server
          */
         submit(e) {
             const is_valid = true;
