@@ -26,7 +26,7 @@
             <ul>
                 <li>Number of bags: {{ donation.quantity }}</li>
                 <li>Institution: {{ institution.name }}, {{ institution.get_type_display }}</li>
-                <li>Categories:{% for category in donation.categories %}{{ category }} {% endfor %}</li>
+                <li>Categories:{% for category in donation.categories.all %} {{ category }}, {% endfor %}</li>
                 <li>Pick up date: {{ donation.pick_up_date }}, {{ donation.pick_up_time }}</li>
             </ul>
         </div>
